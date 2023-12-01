@@ -11,7 +11,7 @@ public interface IPrintable
 {
 }
 
-[BeaKona.AutoAs]
+[BeaKona.GenerateAutoAs]
 public partial class Person : IPrintable
 {
 }
