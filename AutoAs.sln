@@ -29,7 +29,6 @@ Global
 		{DBA68BE8-4627-4CFF-96FE-3688253861B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DBA68BE8-4627-4CFF-96FE-3688253861B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DBA68BE8-4627-4CFF-96FE-3688253861B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DBA68BE8-4627-4CFF-96FE-3688253861B4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
