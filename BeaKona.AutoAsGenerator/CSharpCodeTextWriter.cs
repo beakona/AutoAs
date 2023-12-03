@@ -31,24 +31,24 @@ internal sealed class CSharpCodeTextWriter : ICodeTextWriter
                 processed = true;
                 switch (type.SpecialType)
                 {
-                default: processed = false; break;
-                case SpecialType.System_Object: builder.Append("object"); break;
-                case SpecialType.System_Void: builder.Append("void"); break;
-                case SpecialType.System_Boolean: builder.Append("bool"); break;
-                case SpecialType.System_Char: builder.Append("char"); break;
-                case SpecialType.System_SByte: builder.Append("sbyte"); break;
-                case SpecialType.System_Byte: builder.Append("byte"); break;
-                case SpecialType.System_Int16: builder.Append("short"); break;
-                case SpecialType.System_UInt16: builder.Append("ushort"); break;
-                case SpecialType.System_Int32: builder.Append("int"); break;
-                case SpecialType.System_UInt32: builder.Append("uint"); break;
-                case SpecialType.System_Int64: builder.Append("long"); break;
-                case SpecialType.System_UInt64: builder.Append("ulong"); break;
-                case SpecialType.System_Decimal: builder.Append("decimal"); break;
-                case SpecialType.System_Single: builder.Append("float"); break;
-                case SpecialType.System_Double: builder.Append("double"); break;
-                //case SpecialType.System_Half: builder.Append("half"); break;
-                case SpecialType.System_String: builder.Append("string"); break;
+                    default: processed = false; break;
+                    case SpecialType.System_Object: builder.Append("object"); break;
+                    case SpecialType.System_Void: builder.Append("void"); break;
+                    case SpecialType.System_Boolean: builder.Append("bool"); break;
+                    case SpecialType.System_Char: builder.Append("char"); break;
+                    case SpecialType.System_SByte: builder.Append("sbyte"); break;
+                    case SpecialType.System_Byte: builder.Append("byte"); break;
+                    case SpecialType.System_Int16: builder.Append("short"); break;
+                    case SpecialType.System_UInt16: builder.Append("ushort"); break;
+                    case SpecialType.System_Int32: builder.Append("int"); break;
+                    case SpecialType.System_UInt32: builder.Append("uint"); break;
+                    case SpecialType.System_Int64: builder.Append("long"); break;
+                    case SpecialType.System_UInt64: builder.Append("ulong"); break;
+                    case SpecialType.System_Decimal: builder.Append("decimal"); break;
+                    case SpecialType.System_Single: builder.Append("float"); break;
+                    case SpecialType.System_Double: builder.Append("double"); break;
+                    //case SpecialType.System_Half: builder.Append("half"); break;
+                    case SpecialType.System_String: builder.Append("string"); break;
                 }
             }
 
@@ -194,17 +194,13 @@ internal sealed class CSharpCodeTextWriter : ICodeTextWriter
         this.WriteTypeReference(builder, type, scope);
     }
 
-    public void WriteNamespaceBeginning(SourceBuilder builder, INamespaceSymbol @namespace)
+    public bool WriteNamespaceBeginning(SourceBuilder builder, INamespaceSymbol @namespace)
     {
-        if (@namespace != null && @namespace.ConstituentNamespaces.Length > 0)
+        if (@namespace != null)
         {
-            List<INamespaceSymbol> containingNamespaces = [];
-            for (INamespaceSymbol? ct = @namespace; ct != null && ct.IsGlobalNamespace == false; ct = ct.ContainingNamespace)
-            {
-                containingNamespaces.Insert(0, ct);
-            }
+            INamespaceSymbol[] containingNamespaces = @namespace.GetNamespaceElements();
 
-            if (containingNamespaces.Count > 0)
+            if (containingNamespaces.Length > 0)
             {
                 builder.AppendIndentation();
                 builder.Append("namespace");
@@ -213,8 +209,12 @@ internal sealed class CSharpCodeTextWriter : ICodeTextWriter
                 builder.AppendIndentation();
                 builder.AppendLine('{');
                 builder.IncrementIndentation();
+
+                return true;
             }
         }
+
+        return false;
     }
 
     public void WriteHolderReference(SourceBuilder builder, ISymbol member, ScopeInfo scope)

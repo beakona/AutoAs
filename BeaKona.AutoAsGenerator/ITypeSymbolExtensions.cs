@@ -3,7 +3,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace BeaKona.AutoAsGenerator;
 
-internal static class INamedTypeSymbolExtensions
+internal static class ITypeSymbolExtensions
 {
     public static bool IsPartial(this ITypeSymbol @this)
     {
@@ -19,5 +19,17 @@ internal static class INamedTypeSymbolExtensions
         }
 
         return false;
+    }
+
+    public static INamedTypeSymbol[] GetContainingTypes(this ITypeSymbol @this)
+    {
+        List<INamedTypeSymbol> containingTypes = [];
+
+        for (INamedTypeSymbol? ct = @this.ContainingType; ct != null; ct = ct.ContainingType)
+        {
+            containingTypes.Insert(0, ct);
+        }
+
+        return [.. containingTypes];
     }
 }
