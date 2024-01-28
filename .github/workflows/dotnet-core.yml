@@ -20,7 +20,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
     - name: Setup dotnet
-      uses: actions/setup-dotnet@v4
+      uses: actions/setup-dotnet@v3
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
     - name: Install dependencies
